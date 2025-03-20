@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicted Price</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            background-image: 
+        linear-gradient(rgba(12, 5, 55, 0.5), rgba(0, 0, 0, 0.5)), /* Gradient layer */
+        url('https://th.bing.com/th/id/R.03b9f31636b6093353836a1266638d16?rik=waQMeuonj%2f0F3A&riu=http%3a%2f%2fghar360.com%2fblogs%2fwp-content%2fuploads%2funique-beautiful-houses-on-home-garden-with-beautiful-homes-design-ideas.jpg&ehk=gTibv55pFo97ZQCMECPk5W00T3rVU4To7Je%2bnMiRk%2f8%3d&risl=&pid=ImgRaw&r=0');
+            /* background-image: url('https://th.bing.com/th/id/R.03b9f31636b6093353836a1266638d16?rik=waQMeuonj%2f0F3A&riu=http%3a%2f%2fghar360.com%2fblogs%2fwp-content%2fuploads%2funique-beautiful-houses-on-home-garden-with-beautiful-homes-design-ideas.jpg&ehk=gTibv55pFo97ZQCMECPk5W00T3rVU4To7Je%2bnMiRk%2f8%3d&risl=&pid=ImgRaw&r=0'); */
+            background-size: 1600px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            opacity: 0.8;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .price {
+            font-size: 1.5rem;
+            color: #27ae60;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Predicted House Price</h2>
+
+        {% if price %}
+            <p class="price"><strong>Estimated Price:</strong> {{ price }}</p>
+        {% elif error %}
+            <p class="error">Error: {{ error }}</p>
+        {% endif %}
+
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>

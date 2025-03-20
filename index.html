@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: 
+        linear-gradient(rgba(12, 5, 55, 0.5), rgba(0, 0, 0, 0.5)), /* Gradient layer */
+        url('https://th.bing.com/th/id/R.03b9f31636b6093353836a1266638d16?rik=waQMeuonj%2f0F3A&riu=http%3a%2f%2fghar360.com%2fblogs%2fwp-content%2fuploads%2funique-beautiful-houses-on-home-garden-with-beautiful-homes-design-ideas.jpg&ehk=gTibv55pFo97ZQCMECPk5W00T3rVU4To7Je%2bnMiRk%2f8%3d&risl=&pid=ImgRaw&r=0');
+            /* background-image: url('https://th.bing.com/th/id/R.03b9f31636b6093353836a1266638d16?rik=waQMeuonj%2f0F3A&riu=http%3a%2f%2fghar360.com%2fblogs%2fwp-content%2fuploads%2funique-beautiful-houses-on-home-garden-with-beautiful-homes-design-ideas.jpg&ehk=gTibv55pFo97ZQCMECPk5W00T3rVU4To7Je%2bnMiRk%2f8%3d&risl=&pid=ImgRaw&r=0'); */
+            background-size: 1600px;
+            background-position: center;
+            
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Container Styling */
+.container {
+    background-color: #ffffff; /* Bright white background for clarity */
+    opacity: 0.7;
+    padding: 30px; /* Uniform padding for inner spacing */
+    border-radius: 10px; /* Soft, rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
+    width: 40rem; /* Responsive width */
+/* Limit the maximum size for compact displays */
+    text-align: center; /* Center-align the content */
+    height: 30rem;
+    /* Adding some optional extras */
+    margin: 20px auto; /* Center the container on the page with vertical spacing */
+    font-family: Arial, sans-serif; /* Clean and modern font style */
+}
+
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:active {
+            background-color: #1abc9c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter House Details</h2>
+        <form action="/predict" method="post">
+            <label for="area">Area (sq. ft.): 
+                <input type="number" id="area" name="area" required>
+            </label>
+            <label for="bedrooms">Number of Rooms: 
+                <input type="number" id="bedrooms" name="bedrooms" required>
+            </label>
+            <label for="bathrooms">Number of Bathrooms: 
+                <input type="number" id="bathrooms" name="bathrooms" required>
+            </label>
+            <label for="stories">Number of Stories: 
+                <input type="number" id="stories" name="stories" required>
+            </label>
+            <button type="submit">Predict Price</button>
+        </form>
+    </div>
+</body>
+</html>
