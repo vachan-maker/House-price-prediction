@@ -41,6 +41,16 @@ def init_db():
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         username TEXT UNIQUE NOT NULL,
                         password TEXT NOT NULL)''')
+        
+        cur.execute('''CREATE TABLE IF NOT EXISTS history (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        username TEXT NOT NULL,
+                        area REAL NOT NULL,
+                        bedrooms INTEGER NOT NULL,
+                        bathrooms INTEGER NOT NULL,
+                        stories INTEGER NOT NULL,
+                        price REAL NOT NULL
+                    )''')
         con.commit()
 
 init_db()
@@ -87,7 +97,7 @@ def login():
 
     return render_template("login.html")
 
-# Load trained model
+
 with open("model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
@@ -99,7 +109,17 @@ def home():
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template("myprofile.html",user=current_user)
+    
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT id, username, area, bedrooms, bathrooms, stories,price 
+        FROM history 
+        WHERE username = ?
+    ''', (current_user.username,))
+    history = cursor.fetchall()
+    cursor.close()
+    return render_template("myprofile.html",user=current_user,history=history)
 
 @app.route("/house_price_prediction")
 @login_required
@@ -119,18 +139,25 @@ def predict():
         stories = int(data["stories"])
 
         # Prepare input
-        features = np.array([[area, bedrooms, bathrooms,stories]])
+        features = np.array([[area, bedrooms, bathrooms, stories]])
 
         # Predict price
         predicted_price = model.predict(features)[0]
+
+        # Insert prediction into the history table
+        con = sqlite3.connect('database.db')
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO history (username, area, bedrooms, bathrooms, stories, price) VALUES (?, ?, ?, ?, ?, ?)",
+            (current_user.username, area, bedrooms, bathrooms, stories, predicted_price)
+        )
+        con.commit()
+        con.close()
 
         return render_template("result.html", price=round(predicted_price, 2))
 
     except Exception as e:
         return render_template("result.html", error=str(e))
-
-    except Exception as e:
-        return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
     app.run(debug=True)
