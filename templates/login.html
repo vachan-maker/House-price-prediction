@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <style>
+        .flash-message { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         body, html {
             height: 100%;
             margin: 0;
@@ -109,6 +112,13 @@
             <div class="forgot-password">
                 <p><a href="/register">Don't have an account? Register Now!</a></p>
             </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
         </div>
     </div>
 <button href="home.html"></button>

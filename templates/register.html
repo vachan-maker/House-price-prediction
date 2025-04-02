@@ -109,6 +109,13 @@
             <div class="forgot-password">
                 <p><a href="/login">Already have an account? Login Now!</a></p>
             </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         </div>
     </div>
 <button href="home.html"></button>

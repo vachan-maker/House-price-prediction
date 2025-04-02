@@ -70,7 +70,7 @@ def register():
             flash("Registration successful! Please log in.", "success")
             return redirect(url_for("login"))
         except sqlite3.IntegrityError:
-            flash("Username already exists!", "danger")
+            flash("Username already exists!", "error")
         finally:
             con.close()
 
@@ -90,17 +90,22 @@ def login():
 
         if user and bcrypt.check_password_hash(user[2], password):
             login_user(User(*user))
-            flash("Login successful!", "success")
             return redirect(url_for("house_price_prediction"))
         else:
-            flash("Invalid credentials!", "danger")
+            flash("Invalid credentials!", "error")
 
     return render_template("login.html")
 
 
-with open("model/model.pkl", "rb") as f:
+with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out.", "success")
+    return redirect(url_for("login"))
 
 @app.route("/")
 def home():
